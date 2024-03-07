@@ -21,44 +21,46 @@
 				<table class="table table-striped table-bordered"
 					style="font-size: 20px; font-weight: bold;">
 					<tr>
-						<th>Book ID</th>
-						<th>Book Name</th>
-						<th>Author</th>	
-						<th>Price</th>
-						<th>Category</th>
-						<th>Publications</th>
-						<sec:authorize access="hasRole('ADMIN') or hasRole('ROLE_STOREKEEPER')">
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Email</th>	
+						<th>Phone</th>
+						<th>Active</th>
+						<th>Roles</th>
+						<!--<sec:authorize access="hasRole('ADMIN')">
 						<th colspan="2" align="center"><form:form
-								action="addEditBookForm">
-								<input type="hidden" name="bookId" value="0" />
-								<input type="submit" value=" Add New Book "
+								action="addEditUserForm">
+								<input type="hidden" name="username" value="0" />
+								<input type="submit" value=" Add New User "
 									class="btn btn-success btn-lg" />
 							</form:form></th>
-							</sec:authorize>
+							</sec:authorize>-->
 					</tr>
-					<c:forEach var="mybook" items="${MyBooksList}">
+					<c:forEach var="myuser" items="${MyUsersList}">
 						<tr>
-							<td><a href="viewBook?bookId=${mybook.bid }"> ${mybook.bid }
-							</a></td>
-							<td>${mybook.bname }</td>
-							<td>${mybook.author }</td>
-							<td>${mybook.price }</td>
-							<td>${mybook.category }</td>
-							<td>${mybook.pub }</td>
-							<sec:authorize access="hasRole('ADMIN') or hasRole('ROLE_STOREKEEPER')">
+							<!--<td><a href="viewUser?username=${myuser.username }"> ${myuser.username }
+							</a></td> -->
+							<td>${myuser.firstname }</td>
+							<td>${myuser.lastname }</td>
+							<td>${myuser.email }</td>
+							<td>${myuser.phone }</td>
+							<td><c:choose><c:when test="${myuser.active=='1'}">Yes</c:when>    
+    									<c:otherwise>No</c:otherwise></c:choose></td>
+    						<td>${myuser.userRoles }</td>
+							<!--<sec:authorize access="hasRole('ADMIN') or hasRole('ROLE_STOREKEEPER')">
 							<td><form:form action="addEditBookForm">
-									<input type="hidden" name="bookId" value="${mybook.bid }" />
+									<input type="hidden" name="bookId" value="${myuser.username }" />
 									<input type="submit" value=" Edit "
 										class="btn btn-primary btn-lg" />
 								</form:form></td>
 								</sec:authorize>
 								<sec:authorize access="hasRole('ADMIN')">
 							<td><form:form action="deleteBook">
-									<input type="hidden" name="bookId" value="${mybook.bid }" />
+									<input type="hidden" name="bookId" value="${myuser.username }" />
 									<input type="submit" value=" Delete "
 										class="btn btn-danger btn-lg" />
 								</form:form></td>
-								</sec:authorize>
+								</sec:authorize>-->
 						</tr>
 					</c:forEach>
 				</table>

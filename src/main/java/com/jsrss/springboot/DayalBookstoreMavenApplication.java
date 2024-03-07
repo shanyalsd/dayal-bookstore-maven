@@ -20,5 +20,4 @@ static Logger log = LoggerFactory.getLogger(DayalBookstoreMavenApplication.class
 		log.debug("My Boot App - Main() ends");
 		log.warn("My Boot App - Main() ends");
 	}
-
 }

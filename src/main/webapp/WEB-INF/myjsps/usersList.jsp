@@ -27,14 +27,17 @@
 						<th>Phone</th>
 						<th>Active</th>
 						<th>Roles</th>
-						<!--<sec:authorize access="hasRole('ADMIN')">
-						<th colspan="2" align="center"><form:form
+						<sec:authorize access="hasRole('ADMIN')">
+						<th colspan="2" align="center">
+						<!--<form:form
 								action="addEditUserForm">
 								<input type="hidden" name="username" value="0" />
 								<input type="submit" value=" Add New User "
 									class="btn btn-success btn-lg" />
-							</form:form></th>
-							</sec:authorize>-->
+							</form:form>-->
+							Action
+							</th>
+							</sec:authorize>
 					</tr>
 					<c:forEach var="myuser" items="${MyUsersList}">
 						<tr>
@@ -47,20 +50,27 @@
 							<td><c:choose><c:when test="${myuser.active=='1'}">Yes</c:when>    
     									<c:otherwise>No</c:otherwise></c:choose></td>
     						<td>${myuser.userRoles }</td>
-							<!--<sec:authorize access="hasRole('ADMIN') or hasRole('ROLE_STOREKEEPER')">
-							<td><form:form action="addEditBookForm">
-									<input type="hidden" name="bookId" value="${myuser.username }" />
-									<input type="submit" value=" Edit "
+							<sec:authorize access="hasRole('ADMIN')">
+							<td><form:form action="modifyRolesForm">
+									<input type="hidden" name="username" value="${myuser.username }" />
+									<input type="submit" value=" Edit Roles "
 										class="btn btn-primary btn-lg" />
 								</form:form></td>
 								</sec:authorize>
 								<sec:authorize access="hasRole('ADMIN')">
-							<td><form:form action="deleteBook">
-									<input type="hidden" name="bookId" value="${myuser.username }" />
-									<input type="submit" value=" Delete "
-										class="btn btn-danger btn-lg" />
+							<td><form:form action="activateDeactivateUser">
+									<input type="hidden" name="username" value="${myuser.username }" />
+									<input type="hidden" name="active" value="${myuser.active }" />
+									<c:choose>
+										<c:when test="${myuser.active=='1'}">
+											<input type="submit" value=" Deactivate " class="btn btn-danger btn-lg" />
+										</c:when>    
+    									<c:otherwise>
+    										<input type="submit" value=" Activate " class="btn btn-success btn-lg" />
+    									</c:otherwise>
+    								</c:choose>
 								</form:form></td>
-								</sec:authorize>-->
+								</sec:authorize>
 						</tr>
 					</c:forEach>
 				</table>

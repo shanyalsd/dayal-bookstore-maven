@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jsrss.springboot.entity.Roles;
 import com.jsrss.springboot.entity.User;
 import com.jsrss.springboot.repository.UserDao;
 
@@ -17,6 +18,8 @@ import com.jsrss.springboot.repository.UserDao;
 public class UserServiceImpl implements UserService {
 
 	static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+	
+	private static final String DEFAULT_ROLE = "ROLE_CUSTOMER";
 	
 	@Autowired
 	UserDao userDao;
@@ -30,11 +33,40 @@ public class UserServiceImpl implements UserService {
 		log.debug(user.getPassword());
 		user.setActive(1);
 		userDao.registerUser(user);
-		userDao.addDefaultRole(user);
+		userDao.addUserRole(user.getUsername(), DEFAULT_ROLE);
 	}
 
 	@Override
 	public List<User> getAllUsers() {
 		return userDao.getAllUsers();
+	}
+
+	@Override
+	public void activateDeactivateUser(String username, int active) {
+		userDao.activateDeactivateUser(username, active);
+	}
+
+	@Override
+	public List<String> getAllUserRoles(String username) {
+		return userDao.getAllUserRoles(username);
+	}
+
+	@Override
+	public void updateUserRoles(Roles roles) {
+		List<String> allUserRoles = userDao.getAllUserRoles(roles.getUsername());
+		for(String uirole:roles.getRoles())
+		{
+			if(!allUserRoles.contains(uirole))
+			{
+				userDao.addUserRole(roles.getUsername(), uirole);
+			}
+		}
+		for(String dbrole:allUserRoles)
+		{
+			if(!roles.getRoles().contains(dbrole))
+			{
+				userDao.deleteUserRole(roles.getUsername(), dbrole);
+			}
+		}
 	}
 }

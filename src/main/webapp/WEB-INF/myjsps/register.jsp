@@ -51,7 +51,7 @@
 							<td><form:errors path="firstname" /></td>
 						</tr>
 						<tr>
-							<td>Las Name</td>
+							<td>Last Name</td>
 							<td><form:input path="lastname"
 									class="form-control form-control-lg" /></td>
 							<td><form:errors path="lastname" /></td>

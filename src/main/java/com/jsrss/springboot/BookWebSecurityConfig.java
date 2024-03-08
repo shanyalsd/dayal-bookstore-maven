@@ -26,7 +26,7 @@ public class BookWebSecurityConfig  extends WebSecurityConfigurerAdapter impleme
 				.usersByUsernameQuery(usersQuery)
 				.authoritiesByUsernameQuery(rolesQuery);
 	}
-
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/deleteBook**")
@@ -35,8 +35,14 @@ public class BookWebSecurityConfig  extends WebSecurityConfigurerAdapter impleme
 															.access("hasAnyRole('ROLE_ADMIN','ROLE_STOREKEEPER')")
 															.antMatchers("/editBook**")
 															.access("hasAnyRole('ROLE_ADMIN','ROLE_STOREKEEPER')")
-															//.antMatchers("/placeOrder**")
-															//.access("hasAnyRole('ROLE_CUSTOMER')")
+															.antMatchers("/addEditBookForm**")
+															.access("hasAnyRole('ROLE_ADMIN','ROLE_STOREKEEPER')")
+															.antMatchers("/showAllUsers**")
+															.access("hasAnyRole('ROLE_ADMIN')")
+															.antMatchers("/activateDeactivateUser**")
+															.access("hasRole('ROLE_ADMIN')")
+															.antMatchers("/modifyRolesForm**")
+															.access("hasRole('ROLE_ADMIN')")
 															.and()
 															.formLogin()
 															.loginPage("/login")

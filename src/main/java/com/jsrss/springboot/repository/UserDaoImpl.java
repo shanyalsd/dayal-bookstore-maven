@@ -13,8 +13,6 @@ import com.jsrss.springboot.entity.User;
 @Repository
 public class UserDaoImpl implements UserDao {
 
-	private static final String DEFAULT_ROLE = "ROLE_CUSTOMER";
-	
 	@Autowired
 	JdbcTemplate jdbcTemp;
 
@@ -29,11 +27,17 @@ public class UserDaoImpl implements UserDao {
 				user.getActive());
 	}
 	
-	public void addDefaultRole(User user) {
+	public void addUserRole(String username, String role) {
 		String sql="insert into myroles values(?,?,?)";
 		jdbcTemp.update(sql,getMaxUserRoleId() + 1, 
-				user.getUsername(),
-				DEFAULT_ROLE);
+				username,
+				role);
+	}
+	
+	@Override
+	public void deleteUserRole(String username, String role) {
+		String sql="delete from myroles where myusername=? and role=?";
+		jdbcTemp.update(sql,username,role);
 	}
 	
 	private long getMaxUserRoleId() {
@@ -64,5 +68,17 @@ public class UserDaoImpl implements UserDao {
 			userList.add(user);
 		}
 		return userList;
+	}
+
+	@Override
+	public void activateDeactivateUser(String username, int active) {
+		String sql="update myusers set active=? where username = ?";
+		jdbcTemp.update(sql, active, username);
+	}
+
+	@Override
+	public List<String> getAllUserRoles(String username) {
+		String sql="select role from myroles where myusername = ?";
+		return jdbcTemp.queryForList(sql, String.class, username);
 	}
 }

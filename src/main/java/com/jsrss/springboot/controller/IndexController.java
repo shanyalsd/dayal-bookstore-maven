@@ -34,7 +34,12 @@ public class IndexController {
 		if (auth != null) {
 			Collection<GrantedAuthority> col = (Collection<GrantedAuthority>) auth.getAuthorities();
 			for (GrantedAuthority gauth : col)
-				myroles.add(gauth.getAuthority());
+			{
+				String authority = gauth.getAuthority();
+				if(authority != null)
+					authority = authority.replaceAll("ROLE_", "");
+				myroles.add(authority);
+			}
 		}
 		return myroles;
 	}

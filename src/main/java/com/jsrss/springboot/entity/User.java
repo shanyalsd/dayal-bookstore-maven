@@ -68,7 +68,7 @@ public class User {
 	}
 
 	public String getUserRoles() {
-		return userRoles;
+		return userRoles.replaceAll("ROLE_", "");
 	}
 
 	public void setUserRoles(String userRoles) {

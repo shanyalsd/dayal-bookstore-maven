@@ -18,6 +18,7 @@ static Logger log = LoggerFactory.getLogger(DayalBookstoreMavenApplication.class
 		log.info("Update 1 by Shankar");
 		log.info("Update 2 by Shankar");
 		log.info("Update 3 by Shankar");
+		log.info("Update 4 by Shankar");
 		SpringApplication.run(DayalBookstoreMavenApplication.class, args);
 		log.info("My Boot App - Main() ends");
 		log.debug("My Boot App - Main() ends");
